@@ -1,0 +1,15 @@
+.container {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 15px;
+    margin-left: 50px;
+    margin-top: 50px;
+    margin-right: 60%;
+    padding-left: 50px;
+    padding-right: 40px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+.photo {
+    border-radius: 5px;
+}
