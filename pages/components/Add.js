@@ -1,3 +1,4 @@
+import styles from './style.module.css'
 import {useRef} from 'react'
 
 export default function Add(props) {
@@ -26,9 +27,10 @@ export default function Add(props) {
 
     return (
         <div>
-            <input placeholder="Header:" ref={header} />
-            <input placeholder="Link:" ref={link} />
-            <button onClick={Send} >Add</button>
+            <input className={styles.inputAdd} placeholder="Header:" ref={header} />
+            <input className={styles.inputAdd} placeholder="Link:" ref={link} />
+            <br />
+            <button className={styles.buttonAdd} onClick={Send} >Add</button>
         </div>
     )
 }

@@ -5,7 +5,6 @@ import axios from 'axios'
 export default function Photos(props) {
 
     function DeleteRequest() {
-        console.log(props.data.id)
         
         const options = {
             mode: 'cors',
@@ -23,6 +22,16 @@ export default function Photos(props) {
         })
     }
 
+    function openIamge() {
+        props.setIsOpen(<div onClick={closeImage}  className={styles.imageContainer} >
+            <img className={styles.imageContainerInner} src={props.data.Link} width="80%" height="auto"></img>
+        </div>)
+    }
+
+    function closeImage() {
+        props.setIsOpen(<div></div>)
+    }
+
     return (
         <div className={styles.container} >
             <br />
@@ -30,11 +39,10 @@ export default function Photos(props) {
             <br />
             <h1>{props.data.Title}</h1>
             <div className={styles.buttonContainer}>
-                <button className={styles.openImageButton}>Open Image</button>
+                <button onClick={openIamge} className={styles.openImageButton}>Open Image</button>
                 <br />
                 <button className={styles.deleteButton} onClick={DeleteRequest} >Delete</button> 
             </div>
-
         </div>
     )
 }
