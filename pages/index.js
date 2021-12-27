@@ -7,6 +7,7 @@ import axios from 'axios'
 export default function Home() {
 
   const [array, setArray] = useState([]);
+  const [req, setReq] = useState(false)
 
   useEffect(() =>{
     const options = {
@@ -16,19 +17,20 @@ export default function Home() {
 
   axios.get('http://localhost:3001/', options)
   .then((response) => {
-    console.log(response)
-    setArray(response.data)
+    console.log(response.data)
+    setArray(response.data.reverse())
+    setReq(false)
   })
-  }, []);
+  }, [req]);
 
   return (
     <div>
       <h1>Gallery:</h1>
-      <Add />
+      <Add resend={setReq} />
     
       {array.map(photos => {
         return (
-        <Photos data={photos} />
+        <Photos resend={setReq} data={photos} />
         )
       })}
     </div>

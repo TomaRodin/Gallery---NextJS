@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@200&family=Open+Sans:wght@300&family=Roboto:wght@300&display=swap');
+
 .container {
   padding: 0 2rem;
+  font-family: 'Karla', sans-serif;
+
 }
 
 .main {

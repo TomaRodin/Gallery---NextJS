@@ -1,6 +1,6 @@
 import {useRef} from 'react'
 
-export default function Add() {
+export default function Add(props) {
 
     const header = useRef();
     const link = useRef();
@@ -21,6 +21,7 @@ export default function Add() {
 
         fetch('http://localhost:3001/add', options)
         
+        props.resend(true)
     } 
 
     return (
