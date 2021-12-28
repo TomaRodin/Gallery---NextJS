@@ -19,7 +19,8 @@ app.get('/', function (req, res) {
 
 app.post('/add', function (req, res) {
 
-  if (req.body.Title === "" || req.body.Title === undefined || req.body.Link === undefined || req.body.Link === "") {
+  console.log(req.body)
+  if (req.body.Title === undefined || req.body.Link === undefined) {
     res.json({ success: false })
   }
 
@@ -27,8 +28,9 @@ app.post('/add', function (req, res) {
     const sqlite3 = require('sqlite3').verbose();
     let db = new sqlite3.Database('database.db', sqlite3.OPEN_READWRITE, (err) => {
       db.run(`INSERT INTO Gallery (Title,Link) VALUES ('${req.body.Title}','${req.body.Link}')`);
-
+      	
     })
+    res.json({ success: true })
   }
 
 })
