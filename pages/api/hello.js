@@ -18,11 +18,18 @@ app.get('/', function (req, res) {
 })
 
 app.post('/add', function (req, res) {
-  const sqlite3 = require('sqlite3').verbose();
-  let db = new sqlite3.Database('database.db', sqlite3.OPEN_READWRITE, (err) => {
-    db.run(`INSERT INTO Gallery (Title,Link) VALUES ('${req.body.Title}','${req.body.Link}')`);
 
-  })
+  if (req.body.Title === "" || req.body.Title === undefined || req.body.Link === undefined || req.body.Link === "") {
+    res.json({ success: false })
+  }
+
+  else {
+    const sqlite3 = require('sqlite3').verbose();
+    let db = new sqlite3.Database('database.db', sqlite3.OPEN_READWRITE, (err) => {
+      db.run(`INSERT INTO Gallery (Title,Link) VALUES ('${req.body.Title}','${req.body.Link}')`);
+
+    })
+  }
 
 })
 
@@ -33,7 +40,7 @@ app.delete('/', function (req, res) {
     db.run(`DELETE FROM Gallery WHERE id ='${req.query.id}'`);
   })
 
-  res.json({success:true})
+  res.json({ success: true })
 
 })
 

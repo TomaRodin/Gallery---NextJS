@@ -5,25 +5,25 @@ import axios from 'axios'
 export default function Photos(props) {
 
     function DeleteRequest() {
-        
+
         const options = {
             mode: 'cors',
-            params: {"id":  props.data.id}
+            params: { "id": props.data.id }
         }
 
         axios.delete('http://localhost:3001/', options)
-        .then(response => {
-            if (response.data.success === true) {
-                props.resend(true)
-            }
-            else {
-                console.log({success:false})
-            }
-        })
+            .then(response => {
+                if (response.data.success === true) {
+                    props.resend(true)
+                }
+                else {
+                    console.log({ success: false })
+                }
+            })
     }
 
     function openIamge() {
-        props.setIsOpen(<div onClick={closeImage}  className={styles.imageContainer} >
+        props.setIsOpen(<div onClick={closeImage} className={styles.imageContainer} >
             <img className={styles.imageContainerInner} src={props.data.Link} width="80%" height="auto"></img>
         </div>)
     }
@@ -41,7 +41,7 @@ export default function Photos(props) {
             <div className={styles.buttonContainer}>
                 <button onClick={openIamge} className={styles.openImageButton}>Open Image</button>
                 <br />
-                <button className={styles.deleteButton} onClick={DeleteRequest} >Delete</button> 
+                <button className={styles.deleteButton} onClick={DeleteRequest} >Delete</button>
             </div>
         </div>
     )

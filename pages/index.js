@@ -29,13 +29,13 @@ export default function Home() {
       <h1>Gallery:</h1>
       <Add resend={setReq} />
       <div className={styles.photosContainer}>
-      {array.map(photos => {
-        return (
-          
+        {array.map(photos => {
+          return (
+
             <Photos setIsOpen={setIsOpen} resend={setReq} data={photos} />
-          
-        )
-      })}
+
+          )
+        })}
       </div>
 
 
