@@ -1,10 +1,12 @@
 import styles from './style.module.css'
-import { useRef } from 'react'
+import { useRef, useState} from 'react'
+import axios from 'axios'
 
 export default function Add(props) {
 
     const header = useRef();
     const link = useRef();
+    const [isSuccess, setIsSuccess] = useState()
 
     function Send() {
 
@@ -20,7 +22,12 @@ export default function Add(props) {
             mode: 'cors'
         }
 
-        fetch('http://localhost:3001/add', options)
+        axios('http://localhost:3001/add', options)
+        .then(response => {
+            if (response.data.success === false) {
+                setIsSuccess(<h3>ERROR: Can't upload image</h3>)
+            }
+        })
 
         props.resend(true)
     }
@@ -31,6 +38,7 @@ export default function Add(props) {
             <input className={styles.inputAdd} placeholder="Link:" ref={link} />
             <br />
             <button className={styles.buttonAdd} onClick={Send} >Add</button>
+            {isSuccess}
         </div>
     )
 }
