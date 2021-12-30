@@ -1,45 +1,48 @@
 import styles from './style.module.css'
-import { useRef, useState} from 'react'
+import { useRef } from 'react'
+import React from 'react'
+import {useState} from 'react'
 import axios from 'axios'
 
-export default function Add(props) {
 
-    const header = useRef();
-    const link = useRef();
-    const [isSuccess, setIsSuccess] = useState()
-
-    function Send() {
-
-        const data = {
-            "Title": header.current.value,
-            "Link": link.current.value
-        }
-
-        const options = {
-            Title: header.current.value,
-            Link: link.current.value,
-            headers: { 'Content-Type': 'application/json' },
-            mode: 'cors'
-        }
-
-        axios.post('http://localhost:3001/add', options)
-        .then(response => {
-            if (response.data.success === false) {
-                setIsSuccess(<h3>ERROR: Can't upload image</h3>)
-            }
-            else if (response.data.success === true) {
-                props.resend(true)
-            }
-        })
+const Form = () => {
+    // a local state to store the currently selected file.
+    const [selectedFile, setSelectedFile] = React.useState(null);
+    const [header, setHeader] = useState(null);
+  
+    const handleSubmit = (event) => {
+      event.preventDefault()
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('name', header)
+      try {
+        const response =  axios({
+          method: "post",
+          mode: 'cors',
+          url: "http://localhost:3001/add",
+          data: formData,
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+      } catch(error) {
+        console.log(error)
+      }
+    }
+  
+    const handleFileSelect = (event) => {
+      setSelectedFile(event.target.files[0])
     }
 
+    const handleChange = (event) => {
+        setHeader(event.target.value)
+    }
+  
     return (
-        <div>
-            <input className={styles.inputAdd} placeholder="Header:" ref={header} />
-            <input className={styles.inputAdd} placeholder="Link:" ref={link} />
-            <br />
-            <button className={styles.buttonAdd} onClick={Send} >Add</button>
-            {isSuccess}
-        </div>
+      <form onSubmit={handleSubmit}>
+        <input type="text" onChange={handleChange} ></input>
+        <input type="file" name="upload_file" onChange={handleFileSelect}/>
+        <input type="submit" value="Upload File" />
+      </form>
     )
-}
+  };
+  
+  export default Form;

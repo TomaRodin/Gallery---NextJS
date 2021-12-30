@@ -1,8 +1,10 @@
 import React from "react"
 import styles from './style.module.css'
 import axios from 'axios'
+import {useState, useEffect} from 'react'
 
 export default function Photos(props) {
+
 
     function DeleteRequest() {
 
@@ -24,7 +26,7 @@ export default function Photos(props) {
 
     function openIamge() {
         props.setIsOpen(<div onClick={closeImage} className={styles.imageContainer} >
-            <img className={styles.imageContainerInner} src={props.data.Link} width="80%" height="auto"></img>
+            <img className={styles.imageContainerInner} src={"http://localhost:3001/image/"+props.data.Link} width="80%" height="auto"></img>
         </div>)
     }
 
@@ -35,7 +37,7 @@ export default function Photos(props) {
     return (
         <div className={styles.container} >
             <br />
-            <img className={styles.photo} src={props.data.Link} width="60%" height="auto"></img>
+            <img className={styles.photo} src={"http://localhost:3001/image/"+props.data.Link} width="60%" height="auto"></img>
             <br />
             <h1>{props.data.Title}</h1>
             <div className={styles.buttonContainer}>
