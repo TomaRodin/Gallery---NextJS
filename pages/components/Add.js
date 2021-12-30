@@ -5,8 +5,7 @@ import {useState} from 'react'
 import axios from 'axios'
 
 
-const Form = () => {
-    // a local state to store the currently selected file.
+const Form = (props) => {
     const [selectedFile, setSelectedFile] = React.useState(null);
     const [header, setHeader] = useState(null);
   
@@ -26,6 +25,8 @@ const Form = () => {
       } catch(error) {
         console.log(error)
       }
+      document.getElementById('form').reset();
+      props.resend(true)
     }
   
     const handleFileSelect = (event) => {
@@ -37,9 +38,9 @@ const Form = () => {
     }
   
     return (
-      <form onSubmit={handleSubmit}>
-        <input type="text" onChange={handleChange} ></input>
-        <input type="file" name="upload_file" onChange={handleFileSelect}/>
+      <form id="form" onSubmit={handleSubmit}>
+        <input type="text" onChange={handleChange} placeholder="Title:" ></input>
+        <input type="file" name="upload_file" onChange={handleFileSelect} accept="image/png, image/gif, image/jpeg" />
         <input type="submit" value="Upload File" />
       </form>
     )

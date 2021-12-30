@@ -5,6 +5,7 @@ const app = express();
 const multer = require('multer');
 const path = require('path');
 var fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 
 const storage = multer.diskStorage({
   destination: (req,file,cb) => {
@@ -34,11 +35,15 @@ app.get('/', function (req, res) {
 })
 
 app.post('/add',upload.single('file') , function (req, res) {
-  const name = path.parse(req.file.originalname).name
-  const parts = req.file.originalname.split('.')
+  const oldName = path.parse(req.file.originalname).name+path.parse(req.file.originalname).ext
+  const name = uuidv4() + path.parse(req.file.originalname).ext
+  console.log(name)
+    fs.rename(__dirname+`/Images/${oldName}`, __dirname+`/Images/${name}`, function(err) {
+      if ( err ) console.log('ERROR: ' + err);
+  });
   const sqlite3 = require('sqlite3').verbose();
   let db = new sqlite3.Database('database.db', sqlite3.OPEN_READWRITE, (err) => {
-    const Link = `${name}.${parts[1]}`
+    const Link = `${name}`
     db.run(`INSERT INTO Gallery (Title,Link) VALUES ('${req.body.name}','${Link}')`);
 
   })
