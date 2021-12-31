@@ -74,4 +74,15 @@ app.get('/image/:id', function (req, res) {
 })
 
 
+app.put('/',function (req, res) {
+  const data = req.body.data
+  
+  const sqlite3 = require('sqlite3').verbose();
+  let db = new sqlite3.Database('database.db', sqlite3.OPEN_READWRITE, (err) => {
+    db.all(`UPDATE Gallery SET Title ='${data.NewTitle}' WHERE id =${data.id}`)
+  })
+  res.json({success:true})
+
+})
+
 app.listen(3001);
