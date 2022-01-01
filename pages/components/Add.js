@@ -14,13 +14,19 @@ const Form = (props) => {
       const formData = new FormData();
       formData.append('file', selectedFile);
       formData.append('name', header)
+
+      const authUsername = 'admin'
+      const authPassword = 'admin123'
+    
+      const token = Buffer.from(`${authUsername}:${authPassword}`, 'utf8').toString('base64')
+
       try {
         const response =  axios({
           method: "post",
           mode: 'cors',
           url: "http://localhost:3001/add",
           data: formData,
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: { "Content-Type": "multipart/form-data", "Authorization": `Basic ${token}` },
         });
       } catch(error) {
         console.log(error)

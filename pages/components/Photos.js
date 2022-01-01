@@ -9,9 +9,15 @@ export default function Photos(props) {
 
     function DeleteRequest() {
 
+        const authUsername = 'admin'
+        const authPassword = 'admin123'
+      
+        const token = Buffer.from(`${authUsername}:${authPassword}`, 'utf8').toString('base64')
+
         const options = {
             mode: 'cors',
-            params: { "id": props.data.id }
+            params: { "id": props.data.id },
+            headers: {"Authorization": `Basic ${token}`}
         }
 
         axios.delete('http://localhost:3001/', options)
@@ -36,6 +42,12 @@ export default function Photos(props) {
     }
 
     function SubmitEdit() {
+        const authUsername = 'admin'
+        const authPassword = 'admin123'
+      
+        const token = Buffer.from(`${authUsername}:${authPassword}`, 'utf8').toString('base64')
+
+
         console.log(newNameInput.current.value)
         const data = {
             "NewTitle": newNameInput.current.value,
@@ -44,10 +56,10 @@ export default function Photos(props) {
 
         const options = {
             mode: 'cors',
-            data: data
+            headers: {"Authorization": `Basic ${token}`}
         }
 
-        axios.put('http://localhost:3001/', options)
+        axios.put('http://localhost:3001/',data ,options)
         .then (response => {
             if (response.data.success === true) {
                 closeImage();

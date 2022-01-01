@@ -11,10 +11,16 @@ export default function Home() {
   const [isopen, setIsOpen] = useState(<div></div>);
 
   useEffect(() => {
+    const authUsername = 'admin'
+    const authPassword = 'admin123'
+  
+    const token = Buffer.from(`${authUsername}:${authPassword}`, 'utf8').toString('base64')
+
     const options = {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${token}`},
       mode: 'cors'
     }
+    
 
     axios.get('http://localhost:3001/', options)
       .then((response) => {
