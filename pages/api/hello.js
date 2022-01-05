@@ -6,7 +6,8 @@ const multer = require('multer');
 const path = require('path');
 var fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
-const basicAuth = require("express-basic-auth")
+const basicAuth = require("express-basic-auth");
+const date = require('date-and-time');
 
 
 const storage = multer.diskStorage({
@@ -39,14 +40,17 @@ app.get('/', basicAuth({ users: { 'admin': 'admin123' } }), function (req, res) 
 app.post('/add', basicAuth({ users: { 'admin': 'admin123' } }), upload.single('file'), function (req, res) {
   const oldName = path.parse(req.file.originalname).name + path.parse(req.file.originalname).ext
   const name = uuidv4() + path.parse(req.file.originalname).ext
-  console.log(name)
+  const now = new Date();
+  console.log(now)
+  const dateNow = date.format(now, 'ddd, MMM DD YYYY HH:mm');
+
   fs.rename(__dirname + `/Images/${oldName}`, __dirname + `/Images/${name}`, function (err) {
     if (err) console.log('ERROR: ' + err);
   });
   const sqlite3 = require('sqlite3').verbose();
   let db = new sqlite3.Database('database.db', sqlite3.OPEN_READWRITE, (err) => {
     const Link = `${name}`
-    db.run(`INSERT INTO Gallery (Title,Link) VALUES ('${req.body.name}','${Link}')`);
+    db.run(`INSERT INTO Gallery (Title,Link,Date) VALUES ('${req.body.name}','${Link}','${dateNow}')`);
 
   })
 

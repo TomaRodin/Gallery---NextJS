@@ -26,7 +26,7 @@ const Form = (props) => {
           mode: 'cors',
           url: "http://localhost:3001/add",
           data: formData,
-          headers: { "Content-Type": "multipart/form-data", "Authorization": `Basic ${token}` },
+          headers: { "Content-Type": "multipart/form-data", "Authorization": `Basic ${token}` }
         });
       } catch(error) {
         console.log(error)

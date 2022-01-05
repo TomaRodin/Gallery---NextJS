@@ -86,6 +86,7 @@ export default function Photos(props) {
     return (
         <div className={styles.container} >
             <br />
+            <p className={styles.date}>{props.data.Date}</p>
             <img className={styles.photo} src={"http://localhost:3001/image/"+props.data.Link} width="60%" height="auto"></img>
             <br />
             <h1>{props.data.Title}</h1>
@@ -94,7 +95,7 @@ export default function Photos(props) {
                 <br />
                 <button className={styles.openImageButton} onClick={Rename} >Rename</button>
                 <br></br>
-                <button className={styles.deleteButton} onClick={DeleteRequest} >Delete</button>
+                <button className={styles.deleteButton} onClick={DeleteRequest} >Delete</button>  
             </div>
         </div>
     )
