@@ -90,4 +90,12 @@ app.put('/', basicAuth({ users: { 'admin': 'admin123' } }), function (req, res) 
 
 })
 
+app.get('/static_image/:name', function (req, res) {
+  res.sendFile(__dirname+`/static/${req.params.name}`)
+})
+
+app.get('/download/:name', function (req, res) {
+  res.download(__dirname+`/Images/${req.params.name}`)
+})
+
 app.listen(3001);

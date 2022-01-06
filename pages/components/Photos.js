@@ -3,6 +3,7 @@ import styles from './style.module.css'
 import axios from 'axios'
 import {useState, useEffect, useRef} from 'react'
 
+
 export default function Photos(props) {
 
     const newNameInput = useRef();
@@ -83,6 +84,12 @@ export default function Photos(props) {
         </div>)
     }
 
+    function Download() {
+        const url = `http://localhost:3001/download/${props.data.Link}`
+        
+        window.open(url, '_blank').focus();
+    }
+
     return (
         <div className={styles.container} >
             <br />
@@ -95,7 +102,9 @@ export default function Photos(props) {
                 <br />
                 <button className={styles.openImageButton} onClick={Rename} >Rename</button>
                 <br></br>
+                <br />
                 <button className={styles.deleteButton} onClick={DeleteRequest} >Delete</button>  
+                <img className={styles.downloadIcon} onClick={Download} src={"http://localhost:3001/static_image/download.svg"} ></img>
             </div>
         </div>
     )
