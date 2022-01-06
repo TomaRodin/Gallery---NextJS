@@ -30,15 +30,38 @@ export default function Home() {
       })
   }, [req]);
 
+  function Sort(e) {
+    if (e.target.value === "last") {
+      setArray(
+        [...array].sort(function(a,b){
+          return a.id - b.id;
+        })
+      )
+    }
+    else if (e.target.value === "first") {
+      setArray(
+      [...array].sort(function(a,b){
+        return b.id - a.id;
+      })
+      )
+    }
+  }
+
   return (
     <div>
       <h1>Gallery:</h1>
       <Add resend={setReq} />
+      <div>
+        <select onChange={Sort}>
+          <option value="first" >Newest First</option>
+          <option value="last" >Latest First</option>
+        </select>
+      </div>
       <div className={styles.photosContainer}>
         {array.map(photos => {
           return (
 
-            <Photos setIsOpen={setIsOpen} resend={setReq} data={photos} />
+            <Photos key={photos.id} setIsOpen={setIsOpen} resend={setReq} data={photos} />
 
           )
         })}
