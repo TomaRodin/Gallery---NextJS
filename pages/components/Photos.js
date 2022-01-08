@@ -7,6 +7,7 @@ import {useState, useEffect, useRef} from 'react'
 export default function Photos(props) {
 
     const newNameInput = useRef();
+    const [Dropdown, setDropdown]  = useState("");
 
     function DeleteRequest() {
 
@@ -32,7 +33,7 @@ export default function Photos(props) {
             })
     }
 
-    function openIamge() {
+    function openImage() {
         props.setIsOpen(<div onClick={closeImage} className={styles.imageContainer} >
             <img className={styles.imageContainerInner} src={"http://localhost:3001/image/"+props.data.Link} width="80%" height="auto"></img>
         </div>)
@@ -50,10 +51,15 @@ export default function Photos(props) {
 
 
         console.log(newNameInput.current.value)
-        const data = {
-            "NewTitle": newNameInput.current.value,
-            "id": props.data.id
+
+        class PutData {
+            constructor(NewTitle, id) {
+                this.NewTitle = NewTitle;
+                this.id = id
+            }
         }
+
+        const data = new PutData(newNameInput.current.value, props.data.id);
 
         const options = {
             mode: 'cors',
@@ -90,6 +96,24 @@ export default function Photos(props) {
         window.open(url, '_blank').focus();
     }
 
+    function handleDropdown() {
+        if (Dropdown === "") {
+            setDropdown(<div>
+                <button className={styles.DropdownButton} onClick={Share} >Share</button>
+                <button className={styles.DropdownButton} onClick={Download} >Download</button>
+            </div>)
+        }
+        else {
+            setDropdown("")
+        }
+    }
+
+    function Share() {
+        const link = "http://localhost:3001/image/"+props.data.Link
+        navigator.clipboard.writeText(link);
+        setDropdown("")
+    }
+
     return (
         <div className={styles.container} >
             <br />
@@ -98,13 +122,14 @@ export default function Photos(props) {
             <br />
             <h1>{props.data.Title}</h1>
             <div className={styles.buttonContainer}>
-                <button onClick={openIamge} className={styles.openImageButton}>Open Image</button>
+                <button onClick={openImage} className={styles.openImageButton}>Open Image</button>
                 <br />
                 <button className={styles.openImageButton} onClick={Rename} >Rename</button>
                 <br></br>
                 <br />
-                <button className={styles.deleteButton} onClick={DeleteRequest} >Delete</button>  
-                <img className={styles.downloadIcon} onClick={Download} src={"http://localhost:3001/static_image/download.svg"} ></img>
+                <button className={styles.deleteButton} onClick={DeleteRequest} >Delete</button>
+                <button className={styles.openImageButton} onClick={handleDropdown}>More</button>
+                {Dropdown}  
             </div>
         </div>
     )
